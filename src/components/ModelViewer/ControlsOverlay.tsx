@@ -13,7 +13,6 @@ import {
   ZoomOut,
   Compass,
   ArrowUp,
-  Activity,
   Layers,
 } from 'lucide-react';
 import { BASE_PAIRS, DnaNucleotide } from '../../utils/dnaMath';
@@ -58,28 +57,28 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
 }) => {
   return (
     <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-3 sm:p-5 text-slate-100 select-none">
-      {/* Top HUD Console */}
-      <div className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 bg-slate-950/85 backdrop-blur-xl border border-slate-800/90 p-2 sm:p-2.5 rounded-2xl shadow-2xl max-w-5xl mx-auto w-full">
+      {/* Top Scientific Toolbar */}
+      <div className="pointer-events-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 bg-slate-900/95 backdrop-blur-md border border-slate-800 p-2 sm:p-2.5 rounded-xl shadow-lg max-w-5xl mx-auto w-full">
         {/* Model Selectors */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 w-full sm:w-auto">
           <button
             onClick={() => onSceneModeChange('dna')}
-            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition font-display ${
+            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition ${
               sceneMode === 'dna'
-                ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.35)]'
-                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-transparent'
+                ? 'bg-sky-950/80 text-sky-200 border border-sky-700/80 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
             }`}
           >
-            <Dna className="w-4 h-4 text-cyan-400" />
+            <Dna className="w-4 h-4 text-sky-400" />
             <span>B-DNA Helix</span>
           </button>
 
           <button
             onClick={() => onSceneModeChange('virion_outer')}
-            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition font-display ${
+            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition ${
               sceneMode === 'virion_outer'
-                ? 'bg-rose-500/15 text-rose-300 border border-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.35)]'
-                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-transparent'
+                ? 'bg-rose-950/80 text-rose-200 border border-rose-700/80 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
             }`}
           >
             <Radio className="w-4 h-4 text-rose-400" />
@@ -88,22 +87,22 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
 
           <button
             onClick={() => onSceneModeChange('virion_cutaway')}
-            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition font-display ${
+            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition ${
               sceneMode === 'virion_cutaway'
-                ? 'bg-purple-500/15 text-purple-300 border border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.35)]'
-                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-transparent'
+                ? 'bg-indigo-950/80 text-indigo-200 border border-indigo-700/80 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
             }`}
           >
-            <Crosshair className="w-4 h-4 text-purple-400" />
+            <Crosshair className="w-4 h-4 text-indigo-400" />
             <span>Cutaway Core</span>
           </button>
 
           <button
             onClick={() => onSceneModeChange('reverse_transcription')}
-            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition font-display ${
+            className={`cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition ${
               sceneMode === 'reverse_transcription'
-                ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.35)]'
-                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-900 border border-transparent'
+                ? 'bg-emerald-950/80 text-emerald-200 border border-emerald-700/80 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
             }`}
           >
             <Zap className="w-4 h-4 text-emerald-400" />
@@ -112,27 +111,26 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
         </div>
 
         {/* Camera Control Toolbar */}
-        <div className="flex items-center gap-1.5 self-center sm:self-auto bg-slate-900/90 p-1 rounded-xl border border-slate-800">
-          {/* Preset Angles */}
+        <div className="flex items-center gap-1 self-center sm:self-auto bg-slate-950/80 p-1 rounded-lg border border-slate-800">
           <button
             onClick={() => onPresetView('front')}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition"
-            title="Front View"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-sky-300 hover:bg-slate-800 transition text-xs font-mono"
+            title="Front Angle"
             aria-label="Front view"
           >
             <Eye className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => onPresetView('top')}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition"
-            title="Top-Down View"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-sky-300 hover:bg-slate-800 transition"
+            title="Top-Down Angle"
             aria-label="Top-down view"
           >
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => onPresetView('iso')}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-800 transition"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-sky-300 hover:bg-slate-800 transition"
             title="Isometric Angle"
             aria-label="Isometric angle"
           >
@@ -141,10 +139,9 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
 
           <span className="w-px h-4 bg-slate-800 mx-0.5" />
 
-          {/* Zoom In/Out */}
           <button
             onClick={onZoomIn}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition"
             title="Zoom In"
             aria-label="Zoom in"
           >
@@ -152,7 +149,7 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
           </button>
           <button
             onClick={onZoomOut}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition"
             title="Zoom Out"
             aria-label="Zoom out"
           >
@@ -161,21 +158,19 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
 
           <span className="w-px h-4 bg-slate-800 mx-0.5" />
 
-          {/* Auto Rotation Toggle */}
           <button
             onClick={onToggleRotate}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition"
-            title={isRotating ? 'Pause rotation' : 'Resume rotation'}
+            className="cursor-pointer p-1.5 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition"
+            title={isRotating ? 'Pause auto-rotation' : 'Resume auto-rotation'}
             aria-label="Toggle rotation"
           >
-            {isRotating ? <Pause className="w-3.5 h-3.5 text-cyan-400" /> : <Play className="w-3.5 h-3.5" />}
+            {isRotating ? <Pause className="w-3.5 h-3.5 text-sky-400" /> : <Play className="w-3.5 h-3.5" />}
           </button>
 
-          {/* Reset Camera */}
           <button
             onClick={onResetCamera}
-            className="cursor-pointer p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
-            title="Reset camera viewpoint"
+            className="cursor-pointer p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            title="Reset view"
             aria-label="Reset camera"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -183,63 +178,47 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
         </div>
       </div>
 
-      {/* Middle HUD Reticle Info Overlay */}
-      <div className="pointer-events-none flex justify-between items-start text-[10px] font-mono text-slate-500 px-2 mt-3">
-        <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-900/80 px-2.5 py-1 rounded-lg backdrop-blur">
-          <Activity className="w-3 h-3 text-cyan-400" />
-          <span>VIEWPORT: 60FPS</span>
-          <span className="text-slate-700">|</span>
-          <span className="text-cyan-400 uppercase">MODE: {sceneMode}</span>
-        </div>
-
-        <div className="hidden sm:flex items-center gap-2 bg-slate-950/70 border border-slate-900/80 px-2.5 py-1 rounded-lg backdrop-blur">
-          <span>SCALE: 1 UNIT = 1.0 NM</span>
-          <span className="text-slate-700">|</span>
-          <span>DRAG TO ORBIT</span>
-        </div>
-      </div>
-
-      {/* Bottom Floating Control Trays */}
+      {/* Floating Info / Control Trays */}
       <div className="pointer-events-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-3 mt-auto">
         {/* Left Side: DNA Legend */}
         {sceneMode === 'dna' && (
-          <div className="bg-slate-950/90 backdrop-blur-xl border border-slate-800/90 p-3.5 rounded-2xl shadow-2xl text-xs space-y-2 max-w-xs">
-            <div className="font-semibold text-slate-200 flex items-center justify-between font-display">
-              <span className="flex items-center gap-1.5 text-cyan-300">
-                <Dna className="w-4 h-4 text-cyan-400" /> Watson-Crick Base Pairs
+          <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-xl shadow-lg text-xs space-y-2 max-w-xs">
+            <div className="font-semibold text-slate-200 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-slate-200">
+                <Dna className="w-4 h-4 text-sky-400" /> Base Pairs
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">10.5 bp / turn</span>
+              <span className="text-[11px] text-slate-400 font-mono">10.5 bp / turn</span>
             </div>
-            <div className="grid grid-cols-2 gap-1.5 pt-0.5">
+            <div className="grid grid-cols-2 gap-1.5">
               {(['A', 'T', 'G', 'C'] as DnaNucleotide[]).map((base) => {
                 const info = BASE_PAIRS[base];
                 return (
-                  <div key={base} className="flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1.5 rounded-xl border border-slate-800">
-                    <span className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: info.color }} />
+                  <div key={base} className="flex items-center gap-1.5 bg-slate-950/80 px-2 py-1 rounded border border-slate-800">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: info.color }} />
                     <span className="font-mono font-bold text-slate-200">{base}</span>
                     <span className="text-slate-400 text-[11px] truncate">{info.fullName}</span>
                   </div>
                 );
               })}
             </div>
-            <p className="text-[10px] text-slate-400 pt-1 leading-snug font-mono">
-              A-T (2 H-bonds) &bull; G-C (3 H-bonds) &bull; Pitch: 3.4 nm
+            <p className="text-[11px] text-slate-400 leading-snug">
+              A-T (2 H-bonds) &bull; G-C (3 H-bonds) &bull; Pitch 3.4 nm
             </p>
           </div>
         )}
 
-        {/* Left Side: Virion Hotspot Selectors */}
+        {/* Left Side: Virion Hotspots */}
         {(sceneMode === 'virion_outer' || sceneMode === 'virion_cutaway') && (
-          <div className="bg-slate-950/90 backdrop-blur-xl border border-slate-800/90 p-3.5 rounded-2xl shadow-2xl text-xs space-y-2 max-w-md">
-            <div className="font-semibold text-slate-200 flex items-center justify-between font-display">
-              <span className="flex items-center gap-1.5 text-cyan-300">
-                <Layers className="w-4 h-4 text-cyan-400" /> Virion Protein Hotspots
+          <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-3 rounded-xl shadow-lg text-xs space-y-2 max-w-md">
+            <div className="font-semibold text-slate-200 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-slate-200">
+                <Layers className="w-4 h-4 text-sky-400" /> Protein Callouts
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">
+              <span className="text-[11px] text-slate-400 font-mono">
                 {sceneMode === 'virion_cutaway' ? 'Internal Core & Enzymes' : 'Envelope Trimers'}
               </span>
             </div>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1">
               {['gp120', 'gp41', 'lipid_membrane', 'matrix_p17', 'capsid_p24', 'reverse_transcriptase', 'integrase', 'protease'].map(
                 (id) => {
                   const item = ANATOMY_DETAILS[id];
@@ -248,10 +227,10 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
                     <button
                       key={id}
                       onClick={() => onSelectHotspot(id)}
-                      className="cursor-pointer px-2.5 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-[11px] text-slate-200 border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition active:scale-95"
+                      className="cursor-pointer px-2 py-1 rounded-md bg-slate-950/80 hover:bg-slate-800 text-[11px] text-slate-300 border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition"
                     >
                       <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                      <span className="font-medium">{item.shortName}</span>
+                      <span>{item.shortName}</span>
                     </button>
                   );
                 }
@@ -260,19 +239,19 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
           </div>
         )}
 
-        {/* Right Side: Reverse Transcription Interactive Controls */}
+        {/* Right Side: Reverse Transcription Controls */}
         {sceneMode === 'reverse_transcription' && (
-          <div className="bg-slate-950/90 backdrop-blur-xl border border-slate-800/90 p-4 rounded-2xl shadow-2xl text-xs space-y-3.5 max-w-sm w-full">
+          <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-4 rounded-xl shadow-lg text-xs space-y-3 max-w-sm w-full">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-slate-200 flex items-center gap-2 font-display text-sm">
+              <span className="font-semibold text-slate-200 flex items-center gap-1.5 text-sm">
                 <Zap className="w-4 h-4 text-emerald-400" /> Elongation Scrubber
               </span>
-              <span className="font-mono text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/30">
+              <span className="font-mono text-emerald-300 font-bold px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800/60">
                 {Math.round(rtProgress * 100)}%
               </span>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               <input
                 type="range"
                 min="0"
@@ -280,39 +259,39 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
                 step="0.02"
                 value={rtProgress}
                 onChange={(e) => onRtProgressChange(parseFloat(e.target.value))}
-                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
               />
               <div className="flex justify-between text-[10px] text-slate-400 font-mono">
-                <span>ssRNA Template (5&apos;)</span>
-                <span>cDNA Duplex (3&apos;)</span>
+                <span>ssRNA Template</span>
+                <span>cDNA Duplex</span>
               </div>
             </div>
 
             {/* Drug Inhibitor Blocker Toggle */}
-            <div className="pt-2.5 border-t border-slate-800 flex items-center justify-between gap-2">
+            <div className="pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
               <div>
-                <span className="font-semibold text-slate-200 flex items-center gap-1.5">
+                <span className="font-medium text-slate-200 flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-rose-400" /> NRTI Drug Blocker
                 </span>
-                <p className="text-[10px] text-slate-400 mt-0.5">Simulate AZT/Tenofovir chain-termination</p>
+                <p className="text-[10px] text-slate-400">Simulate AZT/Tenofovir chain-termination</p>
               </div>
               <button
                 onClick={onToggleDrugInhibited}
-                className={`cursor-pointer px-3 py-1.5 rounded-xl font-bold text-xs transition font-mono ${
+                className={`cursor-pointer px-3 py-1.5 rounded-lg font-semibold text-xs transition ${
                   isDrugInhibited
-                    ? 'bg-rose-500 text-white shadow-glow-rose'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                    ? 'bg-rose-700 text-white'
+                    : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
                 }`}
               >
-                {isDrugInhibited ? 'ACTIVE (BLOCK)' : 'INACTIVE'}
+                {isDrugInhibited ? 'ACTIVE' : 'OFF'}
               </button>
             </div>
           </div>
         )}
 
         {/* Speed Adjustment Pill */}
-        <div className="bg-slate-950/80 backdrop-blur-xl border border-slate-800/90 px-3 py-1.5 rounded-xl text-xs flex items-center gap-2.5 font-mono">
-          <span className="text-[10px] text-slate-400">ROTATION</span>
+        <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2">
+          <span className="text-[11px] text-slate-400 font-medium">Rotation</span>
           <input
             type="range"
             min="0.2"
@@ -320,7 +299,7 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
             step="0.1"
             value={rotationSpeed}
             onChange={(e) => onRotationSpeedChange(parseFloat(e.target.value))}
-            className="w-16 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+            className="w-16 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400"
           />
         </div>
       </div>

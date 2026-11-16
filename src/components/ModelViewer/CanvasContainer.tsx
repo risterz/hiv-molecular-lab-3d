@@ -105,7 +105,7 @@ export const CanvasContainer: React.FC = () => {
 
     // 1. Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0f1d);
+    scene.background = new THREE.Color(0x0b0f19);
     sceneRef.current = scene;
 
     // 2. Camera
@@ -121,20 +121,20 @@ export const CanvasContainer: React.FC = () => {
     rendererRef.current = renderer;
     mount.appendChild(renderer.domElement);
 
-    // 4. Lighting setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // 4. Lighting setup (Natural Studio Lighting for accurate molecular rendering)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0x38bdf8, 1.2);
-    dirLight1.position.set(10, 15, 10);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.0);
+    dirLight1.position.set(12, 16, 12);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xa855f7, 0.8);
-    dirLight2.position.set(-10, -10, -10);
+    const dirLight2 = new THREE.DirectionalLight(0xdbeafe, 0.5);
+    dirLight2.position.set(-12, -10, -10);
     scene.add(dirLight2);
 
-    const pointLight = new THREE.PointLight(0xffffff, 0.6, 20);
-    pointLight.position.set(0, 0, 6);
+    const pointLight = new THREE.PointLight(0xffffff, 0.4, 25);
+    pointLight.position.set(0, 0, 8);
     scene.add(pointLight);
 
     // 5. Model Root
@@ -300,7 +300,7 @@ export const CanvasContainer: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[640px] sm:h-[720px] bg-[#050510] rounded-3xl overflow-hidden border border-slate-800 shadow-2xl hud-corner-tl hud-corner-br">
+    <div className="relative w-full h-[640px] sm:h-[720px] bg-[#0b0f19] rounded-2xl overflow-hidden border border-slate-800 shadow-card">
       {/* 3D WebGL Canvas Viewport */}
       <div
         ref={mountRef}
