@@ -7,9 +7,22 @@ import {
   BrainCircuit,
   CheckCircle2,
   User,
+  Activity,
+  GitFork,
+  Zap,
+  Globe,
 } from 'lucide-react';
 
-export type ActiveTab = 'lab' | 'replication' | 'drugs' | 'prevention' | 'quiz';
+export type ActiveTab =
+  | 'lab'
+  | 'timeline'
+  | 'genome'
+  | 'replication'
+  | 'drugs'
+  | 'resistance'
+  | 'prevention'
+  | 'global'
+  | 'quiz';
 
 interface NavigationProps {
   activeTab: ActiveTab;
@@ -18,11 +31,15 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
   const tabs = [
-    { id: 'lab', label: '3D Molecular Lab', icon: Dna, color: 'text-sky-400' },
-    { id: 'replication', label: 'Replication Cycle', icon: RefreshCw, color: 'text-emerald-400' },
-    { id: 'drugs', label: 'Drug Targets & U=U', icon: Pill, color: 'text-indigo-400' },
+    { id: 'lab', label: '3D Lab', icon: Dna, color: 'text-sky-400' },
+    { id: 'timeline', label: 'CD4 & VL Timeline', icon: Activity, color: 'text-emerald-400' },
+    { id: 'genome', label: 'Genome (9.7kb)', icon: GitFork, color: 'text-indigo-400' },
+    { id: 'replication', label: 'Replication Cycle', icon: RefreshCw, color: 'text-cyan-400' },
+    { id: 'drugs', label: 'Drug Targets & U=U', icon: Pill, color: 'text-indigo-300' },
+    { id: 'resistance', label: 'Resistance Simulator', icon: Zap, color: 'text-amber-400' },
     { id: 'prevention', label: 'Prevention & Testing', icon: ShieldCheck, color: 'text-rose-400' },
-    { id: 'quiz', label: 'Myth-Buster Quiz', icon: BrainCircuit, color: 'text-amber-400' },
+    { id: 'global', label: 'UNAIDS 95-95-95', icon: Globe, color: 'text-sky-300' },
+    { id: 'quiz', label: 'Myth Quiz', icon: BrainCircuit, color: 'text-amber-300' },
   ];
 
   return (

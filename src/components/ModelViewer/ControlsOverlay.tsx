@@ -14,6 +14,8 @@ import {
   Compass,
   ArrowUp,
   Layers,
+  Camera,
+  FileText,
 } from 'lucide-react';
 import { BASE_PAIRS, DnaNucleotide } from '../../utils/dnaMath';
 import { ANATOMY_DETAILS } from '../../data/anatomyData';
@@ -36,6 +38,8 @@ interface ControlsOverlayProps {
   onZoomIn: () => void;
   onZoomOut: () => void;
   onPresetView: (preset: 'front' | 'top' | 'iso') => void;
+  onExportSnapshot?: () => void;
+  onExportReport?: () => void;
 }
 
 export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
@@ -54,6 +58,8 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
   onZoomIn,
   onZoomOut,
   onPresetView,
+  onExportSnapshot,
+  onExportReport,
 }) => {
   return (
     <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-3 sm:p-5 text-slate-100 select-none">
@@ -175,6 +181,32 @@ export const ControlsOverlay: React.FC<ControlsOverlayProps> = ({
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
+
+          {(onExportSnapshot || onExportReport) && (
+            <>
+              <span className="w-px h-4 bg-slate-800 mx-0.5" />
+              {onExportSnapshot && (
+                <button
+                  onClick={onExportSnapshot}
+                  className="cursor-pointer p-1.5 rounded text-slate-300 hover:text-sky-300 hover:bg-slate-800 transition"
+                  title="Capture 3D High-Res Snapshot"
+                  aria-label="Capture snapshot"
+                >
+                  <Camera className="w-3.5 h-3.5 text-sky-400" />
+                </button>
+              )}
+              {onExportReport && (
+                <button
+                  onClick={onExportReport}
+                  className="cursor-pointer p-1.5 rounded text-slate-300 hover:text-emerald-300 hover:bg-slate-800 transition"
+                  title="Export Scientific Investigation Report"
+                  aria-label="Export report"
+                >
+                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
 

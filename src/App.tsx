@@ -1,14 +1,25 @@
 import { useState } from 'react';
 import { Navigation, ActiveTab } from './components/Navigation';
 import { CanvasContainer } from './components/ModelViewer/CanvasContainer';
+import { SceneMode } from './components/ModelViewer/ControlsOverlay';
+import { ClinicalTimeline } from './components/Modules/ClinicalTimeline';
+import { GenomeMap } from './components/Modules/GenomeMap';
 import { ReplicationCycle } from './components/Modules/ReplicationCycle';
 import { DrugTargets } from './components/Modules/DrugTargets';
+import { ResistanceSimulator } from './components/Modules/ResistanceSimulator';
 import { PreventionAndTesting } from './components/Modules/PreventionAndTesting';
+import { GlobalTracker } from './components/Modules/GlobalTracker';
 import { MythBusterQuiz } from './components/Modules/MythBusterQuiz';
 import { Heart, Globe, BookOpen, UserCheck } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('lab');
+  const [labSceneMode, setLabSceneMode] = useState<SceneMode>('dna');
+
+  const handleJumpTo3D = (mode: SceneMode = 'dna') => {
+    setLabSceneMode(mode);
+    setActiveTab('lab');
+  };
 
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col selection:bg-sky-800 selection:text-white">
@@ -41,17 +52,25 @@ export default function App() {
             </div>
 
             {/* 3D WebGL Studio */}
-            <CanvasContainer />
+            <CanvasContainer key={labSceneMode} initialSceneMode={labSceneMode} />
           </div>
         )}
 
+        {activeTab === 'timeline' && <ClinicalTimeline />}
+
+        {activeTab === 'genome' && <GenomeMap onJumpTo3DModel={handleJumpTo3D} />}
+
         {activeTab === 'replication' && (
-          <ReplicationCycle onJumpTo3DModel={() => setActiveTab('lab')} />
+          <ReplicationCycle onJumpTo3DModel={() => handleJumpTo3D('reverse_transcription')} />
         )}
 
         {activeTab === 'drugs' && <DrugTargets />}
 
+        {activeTab === 'resistance' && <ResistanceSimulator />}
+
         {activeTab === 'prevention' && <PreventionAndTesting />}
+
+        {activeTab === 'global' && <GlobalTracker />}
 
         {activeTab === 'quiz' && <MythBusterQuiz />}
       </main>

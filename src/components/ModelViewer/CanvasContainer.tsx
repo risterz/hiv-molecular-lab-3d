@@ -7,9 +7,13 @@ import { ControlsOverlay, SceneMode } from './ControlsOverlay';
 import { HotspotModal } from './HotspotModal';
 import { ANATOMY_DETAILS, AnatomyDetail } from '../../data/anatomyData';
 
-export const CanvasContainer: React.FC = () => {
+interface CanvasContainerProps {
+  initialSceneMode?: SceneMode;
+}
+
+export const CanvasContainer: React.FC<CanvasContainerProps> = ({ initialSceneMode = 'dna' }) => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const [sceneMode, setSceneMode] = useState<SceneMode>('dna');
+  const [sceneMode, setSceneMode] = useState<SceneMode>(initialSceneMode);
   const [isRotating, setIsRotating] = useState<boolean>(true);
   const [rotationSpeed, setRotationSpeed] = useState<number>(1.0);
   const [rtProgress, setRtProgress] = useState<number>(0.5);
@@ -114,7 +118,12 @@ export const CanvasContainer: React.FC = () => {
     cameraRef.current = camera;
 
     // 3. Renderer with local clipping enabled for cutaway models
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance',
+      preserveDrawingBuffer: true,
+    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.localClippingEnabled = true;
@@ -299,6 +308,84 @@ export const CanvasContainer: React.FC = () => {
     }
   };
 
+  const handleExportSnapshot = () => {
+    const renderer = rendererRef.current;
+    if (!renderer) return;
+
+    if (sceneRef.current && cameraRef.current) {
+      renderer.render(sceneRef.current, cameraRef.current);
+    }
+
+    const dataUrl = renderer.domElement.toDataURL('image/png');
+    const canvas = document.createElement('canvas');
+    canvas.width = renderer.domElement.width;
+    canvas.height = renderer.domElement.height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+
+      // Bottom scientific badge
+      const barHeight = Math.max(40, canvas.height * 0.06);
+      ctx.fillStyle = 'rgba(11, 15, 25, 0.9)';
+      ctx.fillRect(0, canvas.height - barHeight, canvas.width, barHeight);
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = `bold ${Math.round(barHeight * 0.4)}px sans-serif`;
+      ctx.fillText(`HIV MOLECULAR LAB 3D • ${sceneMode.toUpperCase()}`, 20, canvas.height - barHeight * 0.35);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = `${Math.round(barHeight * 0.35)}px sans-serif`;
+      ctx.fillText('Made by risterz (github.com/risterz)', canvas.width - 280, canvas.height - barHeight * 0.35);
+
+      const stampedUrl = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = stampedUrl;
+      a.download = `hiv-molecular-3d-${sceneMode}.png`;
+      a.click();
+    };
+    img.src = dataUrl;
+  };
+
+  const handleExportReport = () => {
+    const reportText = `=====================================================
+HIV MOLECULAR LAB 3D • SCIENTIFIC INVESTIGATION REPORT
+Attribution: Made by risterz (https://github.com/risterz)
+Generated: ${new Date().toUTCString()}
+Reference Standards: CDC • WHO • NIH • HXB2 Proviral Reference
+=====================================================
+
+1. ACTIVE 3D MODEL TELEMETRY
+----------------------------
+Selected Mode: ${sceneMode.toUpperCase()}
+Mathematical Formulation: Procedural Parametric WebGL (Zero external mesh dependencies)
+${sceneMode === 'dna' ? 'B-DNA Double Helix: 10.5 base pairs/turn, 3.4 nm pitch, major & minor groove phi=2.4 rad' : ''}
+${sceneMode === 'virion_outer' ? 'Complete Virion: Fibonacci spherical lattice N=72 spikes (gp120/gp41), lipid bilayer envelope' : ''}
+${sceneMode === 'virion_cutaway' ? 'Cutaway Core: Conical p24 capsid fullerene cone, (+)ssRNA twin dimer coils, RT/IN/PR enzymes' : ''}
+${sceneMode === 'reverse_transcription' ? `Reverse Transcription Simulation: ${Math.round(rtProgress * 100)}% elongated, NRTI Drug Block: ${isDrugInhibited ? 'ACTIVE (AZT/TDF Terminated)' : 'INACTIVE'}` : ''}
+
+2. CORE CLINICAL & PUBLIC HEALTH EVIDENCE
+-----------------------------------------
+- Undetectable = Untransmittable (U=U): Confirmed by PARTNER 1, PARTNER 2, Opposites Attract, and HPTN 052.
+- Suppression Threshold: Viral load < 200 copies/mL results in zero risk of sexual transmission.
+- Antiretroviral Regimen: Triple therapy combining an Integrase Strand Transfer Inhibitor (INSTI) with two Nucleoside Reverse Transcriptase Inhibitors (NRTIs).
+- UNAIDS 95-95-95 Targets: 95% diagnosed, 95% on ART, 95% virally suppressed halts community-level transmission.
+
+=====================================================
+HIV Molecular Lab 3D • Open Science Resource
+=====================================================`;
+
+    const blob = new Blob([reportText], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `hiv-lab-report-${sceneMode}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="relative w-full h-[640px] sm:h-[720px] bg-[#0b0f19] rounded-2xl overflow-hidden border border-slate-800 shadow-card">
       {/* 3D WebGL Canvas Viewport */}
@@ -329,6 +416,8 @@ export const CanvasContainer: React.FC = () => {
         onZoomIn={handleZoomIn}
         onZoomOut={handleZoomOut}
         onPresetView={handlePresetView}
+        onExportSnapshot={handleExportSnapshot}
+        onExportReport={handleExportReport}
       />
 
       {/* Hotspot Anatomy Modal */}
