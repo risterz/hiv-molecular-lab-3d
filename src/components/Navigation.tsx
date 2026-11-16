@@ -38,10 +38,15 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
           <span>CDC &bull; WHO &bull; NIH Peer-Reviewed Guidelines</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5 text-slate-300 bg-slate-900 border border-slate-800 px-2.5 py-0.5 rounded-full font-medium">
+          <a
+            href="https://github.com/risterz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 px-2.5 py-0.5 rounded-full font-medium transition-colors"
+          >
             <User className="w-3 h-3 text-sky-400" />
-            <span>Made by <strong className="text-white">risterz</strong></span>
-          </span>
+            <span>Made by <strong className="text-white hover:text-sky-400 underline underline-offset-2">risterz</strong></span>
+          </a>
         </div>
       </div>
 
@@ -56,9 +61,14 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
               <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">
                 HIV Molecular Lab <span className="text-slate-400 font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">3D</span>
               </h1>
-              <span className="text-[11px] font-medium text-sky-300 bg-sky-950/70 border border-sky-800/60 px-2 py-0.5 rounded-full hidden sm:inline-block">
+              <a
+                href="https://github.com/risterz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-sky-300 hover:text-sky-200 bg-sky-950/70 hover:bg-sky-900/80 border border-sky-800/60 px-2 py-0.5 rounded-full hidden sm:inline-block transition-colors"
+              >
                 by risterz
-              </span>
+              </a>
             </div>
             <p className="text-[11px] text-slate-400">
               Interactive Virology &bull; Molecular Biology &bull; Public Health

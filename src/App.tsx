@@ -65,10 +65,15 @@ export default function App() {
               <span className="font-display font-medium text-slate-300">HIV Molecular Lab 3D</span>
             </div>
             <span className="hidden sm:inline text-slate-700">&bull;</span>
-            <span className="flex items-center gap-1.5 text-slate-300 bg-slate-900 border border-slate-800 px-2.5 py-0.5 rounded-full text-[11px]">
+            <a
+              href="https://github.com/risterz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 px-2.5 py-0.5 rounded-full text-[11px] transition-colors"
+            >
               <UserCheck className="w-3.5 h-3.5 text-sky-400" />
-              Made by <strong className="text-white">risterz</strong>
-            </span>
+              <span>Made by <strong className="text-white hover:text-sky-400 underline underline-offset-2">risterz</strong></span>
+            </a>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-400 font-mono">
