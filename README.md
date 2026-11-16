@@ -1,5 +1,6 @@
 # HIV Molecular Lab 3D
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-hiv--molecular--lab--3d.pages.dev-F38020.svg?style=flat-square&logo=cloudflare)](https://hiv-molecular-lab-3d.pages.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61dafb.svg?style=flat-square&logo=react)](https://react.dev/)
 [![Three.js](https://img.shields.io/badge/Three.js-r128-black.svg?style=flat-square&logo=three.js)](https://threejs.org/)
@@ -10,6 +11,8 @@
 [![License](https://img.shields.io/badge/License-MIT-emerald.svg?style=flat-square)](LICENSE)
 
 An open-science, mathematically-generated, interactive 3D laboratory platform teaching HIV virology, molecular biology, antiretroviral pharmacology, biophysical drug resistance, and public health epidemiology.
+
+**Live Deployment**: [**https://hiv-molecular-lab-3d.pages.dev**](https://hiv-molecular-lab-3d.pages.dev)
 
 Built with **100% procedural WebGL math**—zero external `.gltf` / `.obj` 3D model files. Every atom, helix, capsid cone, and enzyme cluster is computed dynamically in code.
 
