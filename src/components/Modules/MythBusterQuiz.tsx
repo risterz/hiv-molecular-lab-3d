@@ -6,6 +6,8 @@ import {
   Award,
   ChevronRight,
   BookOpen,
+  Sparkles,
+  BrainCircuit,
 } from 'lucide-react';
 import { QUIZ_QUESTIONS, QuizQuestion } from '../../data/quizQuestions';
 
@@ -50,37 +52,46 @@ export const MythBusterQuiz: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 text-slate-100 animate-fade-in">
       {/* Header */}
-      <div className="pb-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="pb-4 border-b border-slate-800/80 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-            Interactive Knowledge Check
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
+            MODULE 05 &bull; KNOWLEDGE ASSESSMENT
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-            HIV Virology & Myth-Buster Quiz
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1.5 font-display tracking-tight">
+            Virology &amp; Public Health Myth-Buster
           </h2>
           <p className="text-sm text-slate-400 mt-1">
-            Test your understanding of viral genetics, transmission myths, U=U, and prevention tools.
+            Test your understanding of viral replication genetics, transmission realities, U=U, and biomedical prevention.
           </p>
         </div>
 
         {!isCompleted && (
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-2xl text-xs font-mono">
-            <span className="text-slate-400">Question</span>
+          <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 px-3.5 py-2 rounded-2xl text-xs font-mono">
+            <BrainCircuit className="w-4 h-4 text-amber-400" />
+            <span className="text-slate-400">QUESTION:</span>
             <span className="font-bold text-cyan-400">
-              {currentIndex + 1} / {QUIZ_QUESTIONS.length}
+              0{currentIndex + 1} / 0{QUIZ_QUESTIONS.length}
             </span>
           </div>
         )}
       </div>
 
       {!isCompleted ? (
-        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="bg-slate-950/85 backdrop-blur-xl border border-slate-800/90 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 hud-corner-tl hud-corner-br">
+          {/* Progress Bar */}
+          <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-300"
+              style={{ width: `${((currentIndex + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
+            />
+          </div>
+
           {/* Question Tag & Content */}
-          <div className="space-y-2">
-            <span className="text-[11px] font-bold font-mono uppercase tracking-wider text-purple-400 bg-purple-950/40 px-2.5 py-1 rounded-full border border-purple-500/30 inline-block">
+          <div className="space-y-2.5">
+            <span className="text-[10px] font-bold font-mono uppercase tracking-widest text-amber-300 bg-amber-950/40 px-3 py-1 rounded-full border border-amber-500/30 inline-block">
               {currentQ.category}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+            <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug font-display">
               {currentQ.question}
             </h3>
           </div>
@@ -92,15 +103,15 @@ export const MythBusterQuiz: React.FC = () => {
               const isCorrect = idx === currentQ.correctAnswerIndex;
 
               let btnStyle =
-                'bg-slate-950/60 border-slate-800/80 text-slate-200 hover:bg-slate-800/70 hover:border-slate-700';
+                'bg-slate-900/60 border-slate-800/80 text-slate-200 hover:bg-slate-900 hover:border-slate-700';
 
               if (hasAnsweredCurrent) {
                 if (isCorrect) {
-                  btnStyle = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-200 shadow-lg shadow-emerald-500/10';
+                  btnStyle = 'bg-emerald-950/50 border-emerald-500/80 text-emerald-200 shadow-glow-emerald';
                 } else if (isSelected) {
-                  btnStyle = 'bg-rose-950/50 border-rose-500/80 text-rose-200';
+                  btnStyle = 'bg-rose-950/50 border-rose-500/80 text-rose-200 shadow-glow-rose';
                 } else {
-                  btnStyle = 'bg-slate-950/40 border-slate-900 text-slate-500 opacity-60';
+                  btnStyle = 'bg-slate-950/30 border-slate-900 text-slate-500 opacity-50';
                 }
               }
 
@@ -109,7 +120,7 @@ export const MythBusterQuiz: React.FC = () => {
                   key={idx}
                   onClick={() => handleSelectOption(idx)}
                   disabled={hasAnsweredCurrent}
-                  className={`w-full text-left p-4 rounded-2xl border transition flex items-start justify-between gap-3 ${btnStyle}`}
+                  className={`cursor-pointer w-full text-left p-4 rounded-2xl border transition flex items-start justify-between gap-3 ${btnStyle}`}
                 >
                   <div className="flex items-start gap-3">
                     <span className="w-6 h-6 rounded-lg bg-slate-800 text-xs font-mono font-bold flex items-center justify-center shrink-0 mt-0.5 text-slate-300">
@@ -134,30 +145,30 @@ export const MythBusterQuiz: React.FC = () => {
 
           {/* Explanation Box (Visible once answered) */}
           {hasAnsweredCurrent && (
-            <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2 animate-fade-in">
-              <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                <BookOpen className="w-4 h-4" /> Scientific Rationale
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5 animate-fade-in shadow-inner">
+              <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider font-mono">
+                <BookOpen className="w-4 h-4" /> Scientific Rationale &amp; Mechanism
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
                 {currentQ.explanation}
               </p>
-              <span className="text-[11px] text-slate-400 font-mono block pt-1">
-                Source: {currentQ.scientificReference}
-              </span>
+              <div className="text-[11px] text-slate-400 font-mono pt-1 border-t border-slate-800/80">
+                Primary Clinical Citation: <span className="text-cyan-300">{currentQ.scientificReference}</span>
+              </div>
             </div>
           )}
 
           {/* Action Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-slate-800/80">
-            <span className="text-xs text-slate-400">
-              {hasAnsweredCurrent ? 'Review rationale above' : 'Select an answer to reveal explanation'}
+            <span className="text-xs text-slate-400 font-mono">
+              {hasAnsweredCurrent ? 'REVIEW RATIONALE ABOVE' : 'SELECT AN OPTION TO REVEAL CLINICAL DATA'}
             </span>
             {hasAnsweredCurrent && (
               <button
                 onClick={handleNext}
-                className="px-5 py-2.5 rounded-xl font-bold text-xs bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition flex items-center gap-1.5 shadow-md shadow-cyan-500/20"
+                className="cursor-pointer px-5 py-2.5 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition flex items-center gap-1.5 shadow-glow-cyan"
               >
-                {currentIndex < QUIZ_QUESTIONS.length - 1 ? 'Next Question' : 'View Final Score'}
+                {currentIndex < QUIZ_QUESTIONS.length - 1 ? 'Next Question' : 'View Assessment Result'}
                 <ChevronRight className="w-4 h-4" />
               </button>
             )}
@@ -165,46 +176,61 @@ export const MythBusterQuiz: React.FC = () => {
         </div>
       ) : (
         /* Quiz Completed Screen */
-        <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl text-center space-y-6">
-          <div className="w-20 h-20 mx-auto rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+        <div className="bg-slate-950/90 backdrop-blur-xl border border-slate-800/90 rounded-3xl p-8 sm:p-12 shadow-2xl text-center space-y-6 hud-corner-tl hud-corner-br">
+          <div className="w-20 h-20 mx-auto rounded-3xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-glow-cyan">
             <Award className="w-10 h-10" />
           </div>
 
           <div className="space-y-2">
-            <h3 className="text-3xl font-extrabold text-white">Quiz Completed!</h3>
+            <h3 className="text-3xl font-black text-white font-display">Assessment Completed</h3>
             <p className="text-sm text-slate-300">
               You scored{' '}
-              <span className="font-extrabold text-cyan-400 text-lg">
+              <span className="font-extrabold text-cyan-400 text-xl font-mono">
                 {totalCorrect} / {QUIZ_QUESTIONS.length}
               </span>{' '}
               ({percentage}%)
             </p>
           </div>
 
-          <div className="max-w-md mx-auto p-4 rounded-2xl bg-slate-950/60 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+          <div className="max-w-lg mx-auto p-5 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs text-slate-200 leading-relaxed">
             {percentage === 100 && (
-              <p className="text-emerald-400 font-bold">
-                🌟 Perfect Mastery! You have a comprehensive grasp of HIV molecular biology, transmission science, and U=U.
-              </p>
+              <div className="space-y-1">
+                <span className="text-emerald-400 font-bold font-display text-sm flex items-center justify-center gap-1.5">
+                  <Sparkles className="w-4 h-4" /> Perfect Virology Mastery!
+                </span>
+                <p className="text-slate-300">
+                  You demonstrated comprehensive command of HIV molecular genetics, reverse transcriptase infidelity, U=U trial evidence, and clinical window periods.
+                </p>
+              </div>
             )}
             {percentage >= 75 && percentage < 100 && (
-              <p className="text-cyan-400 font-bold">
-                👏 Excellent Work! You understand core virology mechanisms and evidence-based prevention.
-              </p>
+              <div className="space-y-1">
+                <span className="text-cyan-400 font-bold font-display text-sm">
+                  Clinical Competence Achieved!
+                </span>
+                <p className="text-slate-300">
+                  Strong grasp of transmission science, PrEP/PEP timing, and antiretroviral mechanisms.
+                </p>
+              </div>
             )}
             {percentage < 75 && (
-              <p className="text-amber-400 font-bold">
-                📚 Good effort! Review the 3D Molecular Lab and Replication Cycle tabs to sharpen key concepts.
-              </p>
+              <div className="space-y-1">
+                <span className="text-amber-400 font-bold font-display text-sm">
+                  Good Review Opportunity!
+                </span>
+                <p className="text-slate-300">
+                  Review the 3D Molecular Lab and Replication Cycle tabs to reinforce understanding of viral enzymes and transmission vectors.
+                </p>
+              </div>
             )}
           </div>
 
           <div>
             <button
               onClick={handleRestart}
-              className="px-6 py-3 rounded-2xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-slate-100 transition inline-flex items-center gap-2 border border-slate-700 shadow-md"
+              className="cursor-pointer px-6 py-3 rounded-2xl font-bold text-xs bg-slate-900 hover:bg-slate-800 text-slate-100 transition inline-flex items-center gap-2 border border-slate-700 shadow-lg"
             >
-              <RotateCcw className="w-4 h-4" /> Retake Quiz
+              <RotateCcw className="w-4 h-4" /> Retake Assessment
             </button>
           </div>
         </div>

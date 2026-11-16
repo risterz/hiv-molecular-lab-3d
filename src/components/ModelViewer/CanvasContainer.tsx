@@ -268,6 +268,31 @@ export const CanvasContainer: React.FC = () => {
     }
   };
 
+  const handleZoomIn = () => {
+    if (!cameraRef.current) return;
+    cameraRef.current.position.z = Math.max(4, cameraRef.current.position.z - 1.2);
+  };
+
+  const handleZoomOut = () => {
+    if (!cameraRef.current) return;
+    cameraRef.current.position.z = Math.min(20, cameraRef.current.position.z + 1.2);
+  };
+
+  const handlePresetView = (preset: 'front' | 'top' | 'iso') => {
+    if (!cameraRef.current || !modelRootRef.current) return;
+    const baseZ = sceneMode === 'dna' || sceneMode === 'reverse_transcription' ? 9 : 11;
+    if (preset === 'front') {
+      modelRootRef.current.rotation.set(0, 0, 0);
+      cameraRef.current.position.set(0, 0, baseZ);
+    } else if (preset === 'top') {
+      modelRootRef.current.rotation.set(Math.PI / 2, 0, 0);
+      cameraRef.current.position.set(0, 0, baseZ);
+    } else if (preset === 'iso') {
+      modelRootRef.current.rotation.set(0.4, 0.6, 0);
+      cameraRef.current.position.set(0, 0, baseZ);
+    }
+  };
+
   const handleSelectHotspot = (hotspotId: string) => {
     if (ANATOMY_DETAILS[hotspotId]) {
       setSelectedHotspot(ANATOMY_DETAILS[hotspotId]);
@@ -275,7 +300,7 @@ export const CanvasContainer: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[620px] sm:h-[700px] bg-[#0a0f1d] rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div className="relative w-full h-[640px] sm:h-[720px] bg-[#050510] rounded-3xl overflow-hidden border border-slate-800 shadow-2xl hud-corner-tl hud-corner-br">
       {/* 3D WebGL Canvas Viewport */}
       <div
         ref={mountRef}
@@ -301,6 +326,9 @@ export const CanvasContainer: React.FC = () => {
         onToggleDrugInhibited={() => setIsDrugInhibited((prev) => !prev)}
         onSelectHotspot={handleSelectHotspot}
         onResetCamera={handleResetCamera}
+        onZoomIn={handleZoomIn}
+        onZoomOut={handleZoomOut}
+        onPresetView={handlePresetView}
       />
 
       {/* Hotspot Anatomy Modal */}
